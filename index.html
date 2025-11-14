@@ -5,7 +5,468 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Embedded Solutions | Linux & Embedded Systems Consultancy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text);
+            line-height: 1.6;
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--secondary);
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #c0392b;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 180px 0 100px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            background: var(--primary);
+            color: white;
+            font-size: 2.5rem;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .service-content {
+            padding: 25px;
+        }
+        
+        .service-content h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Expertise Section */
+        .expertise {
+            background-color: var(--light);
+        }
+        
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .expertise-item {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .expertise-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .expertise-item i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        /* Process Section */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+        
+        .step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 25px;
+            right: -10px;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary);
+            z-index: -1;
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .cta h2 {
+            color: white;
+        }
+        
+        .cta h2:after {
+            background: white;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.4rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .step:not(:last-child):after {
+                display: none;
+            }
+            
+            .process-steps {
+                gap: 30px;
+            }
+            
+            .step {
+                min-width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            nav ul {
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+            }
+            
+            nav {
+                width: 100%;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                margin-top: 20px;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -42,23 +503,220 @@
         <div class="container">
             <h2>Our Services</h2>
             <div class="services-grid">
-                <!-- Service cards remain the same as previous code -->
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fab fa-linux"></i>
                     </div>
                     <div class="service-content">
                         <h3>Linux System Development</h3>
-                        <p>Custom Linux distribution development, kernel configuration, optimization, and system integration.</p>
+                        <p>Custom Linux distribution development, kernel configuration, optimization, and system integration tailored to your specific hardware requirements.</p>
                     </div>
                 </div>
-                <!-- Add all other service cards -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Embedded Systems</h3>
+                        <p>Design and development of embedded solutions for IoT, industrial automation, consumer electronics, and other specialized applications.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Virtualization Solutions</h3>
+                        <p>Implementation of virtualization technologies including KVM, Docker containers, and hypervisors for embedded and enterprise systems.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Board Bring-up & BSP</h3>
+                        <p>Comprehensive board support package development, hardware validation, firmware development, and system initialization for new hardware platforms.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Device Driver Development</h3>
+                        <p>Custom Linux device drivers for new hardware peripherals, kernel module development, and driver optimization for performance and stability.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>System Integration & Testing</h3>
+                        <p>End-to-end system integration, validation, performance testing, and quality assurance for embedded Linux solutions.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Rest of your HTML content -->
+    <!-- Expertise Section -->
+    <section class="expertise" id="expertise">
+        <div class="container">
+            <h2>Our Expertise</h2>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <i class="fab fa-linux"></i>
+                    <h3>Linux Kernel</h3>
+                    <p>Deep expertise in Linux kernel internals, configuration, and customization</p>
+                </div>
+                <div class="expertise-item">
+                    <i class="fas fa-microchip"></i>
+                    <h3>ARM & RISC-V</h3>
+                    <p>Extensive experience with ARM Cortex series and RISC-V architectures</p>
+                </div>
+                <div class="expertise-item">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>Yocto Project</h3>
+                    <p>Custom Linux distributions using Yocto Project and Buildroot</p>
+                </div>
+                <div class="expertise-item">
+                    <i class="fas fa-network-wired"></i>
+                    <h3>Bootloaders</h3>
+                    <p>U-Boot, GRUB, and custom bootloader development and configuration</p>
+                </div>
+                <div class="expertise-item">
+                    <i class="fas fa-plug"></i>
+                    <h3>Device Trees</h3>
+                    <p>Device Tree configuration and customization for hardware description</p>
+                </div>
+                <div class="expertise-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Security</h3>
+                    <p>Embedded system security, secure boot, and encryption implementation</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- Process Section -->
+    <section id="process">
+        <div class="container">
+            <h2>Our Development Process</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Requirement Analysis</h3>
+                    <p>We work closely with you to understand your technical requirements, constraints, and project goals.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Architecture Design</h3>
+                    <p>Our experts design the optimal system architecture and select appropriate technologies for your project.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Implementation</h3>
+                    <p>We develop robust, efficient, and maintainable code following industry best practices.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Testing & Validation</h3>
+                    <p>Comprehensive testing ensures system reliability, performance, and functionality.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Deployment & Support</h3>
+                    <p>We assist with deployment and provide ongoing support and maintenance services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Ready to Start Your Project?</h2>
+            <p>Contact us today to discuss how our expertise in Linux and embedded systems can help bring your project to life.</p>
+            <a href="#contact" class="btn">Get a Free Consultation</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Nexus Embedded</h3>
+                    <p>Providing expert Linux and embedded systems consultancy services for businesses worldwide.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Linux System Development</a></li>
+                        <li><a href="#">Embedded Systems</a></li>
+                        <li><a href="#">Virtualization Solutions</a></li>
+                        <li><a href="#">Board Bring-up & BSP</a></li>
+                        <li><a href="#">Device Driver Development</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#expertise">Expertise</a></li>
+                        <li><a href="#process">Process</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Tech Park, Innovation City</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@nexusembedded.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Nexus Embedded Solutions. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            document.querySelector('nav').classList.toggle('active');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('nav').classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
